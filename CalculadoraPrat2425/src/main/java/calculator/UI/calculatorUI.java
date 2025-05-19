@@ -10,7 +10,7 @@ import java.awt.*;
 public class calculatorUI extends JFrame {
     public static final int WIDTH = 500;
     public static final int HEIGHT = 700;
-    
+    private static textFont customFont = new textFont(); 
     private String textoAC = "Perro vegano";
 
 
@@ -24,12 +24,12 @@ public class calculatorUI extends JFrame {
     }
 
     public void iniciarComponentes() {
-        textFont customFont = new textFont();
+        
         JPanel mainPanel = new JPanel(new BorderLayout());
         this.setContentPane(mainPanel);
 
         JTextField pantalla = new JTextField();
-        pantalla.setFont(new Font("Arial", Font.BOLD, 30));
+        pantalla.setFont(customFont.obtenerFuente(Font.BOLD, 30f));
         pantalla.setEditable(false);
         mainPanel.add(pantalla, BorderLayout.NORTH);
 
@@ -43,7 +43,7 @@ public class calculatorUI extends JFrame {
 
         gbc.gridwidth = 4;
         JTextField textoPantalla = new JTextField(textoAC);
-        textoPantalla.setFont(new Font("Arial", Font.BOLD, 20));
+        textoPantalla.setFont(customFont.obtenerFuente(Font.BOLD, 30f));
         textoPantalla.setHorizontalAlignment(JTextField.CENTER);
         textoPantalla.setEditable(false);
         textoPantalla.setBackground(Color.RED);

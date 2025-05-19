@@ -1,40 +1,30 @@
 package main.java.calculator.UI;
 
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
-import java.io.File;
-import java.io.IOException;
+import java.awt.*;
+import java.io.InputStream;
 
 public class textFont {
-    public static void main(String[] args) {
+    private static Font customFont;
+    {
+        cargarFuente();
+    }
+
+    private void cargarFuente() {
         try {
-            // Ruta a tu archivo de fuente (puede ser .ttf, .otf, etc.)
-            String fontPath = "src\\main\\resources\\TextFont\\Calculator.ttf";
+            // Ruta CORRECTA con '/' y desde raíz de classpath
+            InputStream is = textFont.class.getResourceAsStream("/TextFont/Calculator.ttf");
             
-            // Cargar la fuente desde el archivo
-            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File(fontPath));
+            if (is == null) {
+                throw new Exception("Fuente no encontrada en: /TextFont/Calculator.ttf");
+            }
             
-            // Opcional: derivar un tamaño y estilo específico
-            Font sizedFont = customFont.deriveFont(12f); // Tamaño 12
-            
-            // Registrar la fuente en el entorno gráfico para que esté disponible
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(customFont);
-            
-            // Ahora puedes usar la fuente como cualquier otra
-            // Ejemplo con un JLabel:
-            // JLabel label = new JLabel("Texto con fuente personalizada");
-            // label.setFont(sizedFont);
-            
-            System.out.println("Fuente cargada correctamente: " + customFont.getFontName());
-            
-        } 
-        catch (IOException | FontFormatException e) {
-            System.err.println("Error al cargar la fuente: " + e.getMessage());
+            customFont = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (Exception e) {
+            System.err.println("Error carga fuente: " + e.getMessage());
+            customFont = new Font("Arial", Font.PLAIN, 12);
         }
     }
-    public static Font getFont(){
-        return getFont();
+    public Font obtenerFuente(int estilo, float tamaño) {
+        return customFont.deriveFont(estilo, tamaño);
     }
 }
