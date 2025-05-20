@@ -6,8 +6,8 @@ import java.io.IOException;
 
 public class textFont {
     private static Font customFont;
-    private static String fontPath = "C:\\Github\\CalculadoraPrat24-25\\CalculadoraPrat2425\\CalculadoraPrat2425\\src\\main\\resources\\TextFont\\Calculator.ttf";
-    private static String specialFont = "C:\\Github\\CalculadoraPrat24-25\\CalculadoraPrat2425\\CalculadoraPrat2425\\src\\main\\resources\\TextFont\\NotoSans-Black.ttf";
+    private static String fontPath = "src\\main\\resources\\TextFont\\Calculator.ttf";
+    private static String specialFont = "src\\main\\resources\\TextFont\\NotoSans-Black.ttf";
     {
         cargarFuente(1);
     }
@@ -18,7 +18,7 @@ public class textFont {
            
             File ruta = new File(i==1?fontPath:specialFont);
             
-            customFont = Font.createFont(Font.TRUETYPE_FONT, ruta);
+            customFont = Font.createFont(0, ruta);
             System.out.println("Fuente cargada correctamente");
         } catch (FontFormatException | IOException e) {
             System.err.println("Error carga fuente: " + e.getMessage());
@@ -29,7 +29,7 @@ public class textFont {
         return customFont.deriveFont(estilo, tamaño);
     }
     public Font obtenerFuenteEspecial(int estilo, float tamaño){
-        this.cargarFuente(2);
-        return customFont.deriveFont(estilo, tamaño);
+        customFont = new Font("Sans-Serif",1,30);
+        return customFont;//customFont.deriveFont(estilo, tamaño);
     }
 }

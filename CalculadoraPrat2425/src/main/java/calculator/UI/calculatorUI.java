@@ -53,7 +53,7 @@ public class calculatorUI extends JFrame {
 
         gbc.gridwidth = 1;
         String[][] botones = {
-            {"AC", "卍", "%", "/"},
+            {"AC", "卐", "%", "/"},
             {"7", "8", "9", "x"},
             {"4", "5", "6", "-"},
             {"1", "2", "3", "+"},
@@ -70,10 +70,11 @@ public class calculatorUI extends JFrame {
     }
 
     private void agregarBoton(JPanel panel, GridBagConstraints gbc, String texto, int x, int y) {
+
         gbc.gridx = x;
         gbc.gridy = y;
         JButton boton = new JButton(texto);
-        boton.setFont(texto.equals("卍")?new textFont().obtenerFuenteEspecial(x, y):customFont);
+        boton.setFont(texto.equals("卐")?new textFont().obtenerFuenteEspecial(x, y):customFont);
         boton.setBackground(new Color(255, 153, 51));
         boton.setOpaque(true);
         boton.setBorderPainted(false);
