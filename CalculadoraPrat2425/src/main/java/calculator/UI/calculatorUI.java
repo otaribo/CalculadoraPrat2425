@@ -1,8 +1,7 @@
 package main.java.calculator.UI;
 
-import main.resources.TextFont.*; 
+import main.java.calculator.controller.buttonActions;
 
-import java.io.*;
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,8 +9,10 @@ import java.awt.*;
 public class calculatorUI extends JFrame {
     public static final int WIDTH = 500;
     public static final int HEIGHT = 700;
-    private static textFont customFont = new textFont(); 
-    private String textoAC = "Perro vegano";
+    private static textFont createCustomFont = new textFont();
+    private static Font customFont = createCustomFont.obtenerFuente(1, 30f);
+    private StringBuilder textoString = new StringBuilder("");
+    public JTextField textoPantalla = new JTextField(textoString.toString());
 
 
 
@@ -24,17 +25,17 @@ public class calculatorUI extends JFrame {
     }
 
     public void iniciarComponentes() {
-        
         JPanel mainPanel = new JPanel(new BorderLayout());
         this.setContentPane(mainPanel);
 
-        JTextField pantalla = new JTextField();
-        pantalla.setFont(customFont.obtenerFuente(Font.BOLD, 30f));
-        pantalla.setEditable(false);
-        mainPanel.add(pantalla, BorderLayout.NORTH);
+        textoPantalla.setFont(customFont);
+        textoPantalla.setEditable(false);
+        textoPantalla.setHorizontalAlignment(JTextField.RIGHT);
+        textoPantalla.setBackground(Color.GRAY);
+        mainPanel.add(textoPantalla, BorderLayout.NORTH);
 
         JPanel panelBotones = new JPanel(new GridBagLayout());
-        panelBotones.setBackground(Color.YELLOW);
+        panelBotones.setBackground(Color.GRAY);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1;
@@ -42,19 +43,19 @@ public class calculatorUI extends JFrame {
         gbc.insets = new Insets(2, 2, 2, 2);
 
         gbc.gridwidth = 4;
-        JTextField textoPantalla = new JTextField(textoAC);
-        textoPantalla.setFont(customFont.obtenerFuente(Font.BOLD, 30f));
-        textoPantalla.setHorizontalAlignment(JTextField.CENTER);
+        textoPantalla.setFont(customFont);
+        textoPantalla.setFont(textoPantalla.getFont().deriveFont(50f));
+        textoPantalla.setHorizontalAlignment(JTextField.RIGHT);
         textoPantalla.setEditable(false);
-        textoPantalla.setBackground(Color.RED);
+        textoPantalla.setBackground(Color.LIGHT_GRAY);
         textoPantalla.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         panelBotones.add(textoPantalla, gbc);
 
         gbc.gridwidth = 1;
         String[][] botones = {
-            {"AC", "+-", "%", "/"},
+            {"AC", "卍", "%", "/"},
             {"7", "8", "9", "x"},
-            {"4", "5", "6", "–"},
+            {"4", "5", "6", "-"},
             {"1", "2", "3", "+"},
             {"<-", "0", ",", "="}
         };
@@ -72,10 +73,14 @@ public class calculatorUI extends JFrame {
         gbc.gridx = x;
         gbc.gridy = y;
         JButton boton = new JButton(texto);
-        boton.setFont(new Font("Arial", Font.BOLD, 20));
-        boton.setBackground(Color.RED);
+        boton.setFont(texto.equals("卍")?new textFont().obtenerFuenteEspecial(x, y):customFont);
+        boton.setBackground(new Color(255, 153, 51));
         boton.setOpaque(true);
         boton.setBorderPainted(false);
+        boton.setFocusable(false);
+        boton.addActionListener(new buttonActions(texto, textoString, textoPantalla));
         panel.add(boton, gbc);
     }
+
+    
 }
